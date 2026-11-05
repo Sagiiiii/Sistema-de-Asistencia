@@ -1,0 +1,41 @@
+<header
+  class="sticky top-0 z-30 flex h-16 shrink-0 items-center gap-2 border-b border-surface-200 bg-white/80 px-4 backdrop-blur-md sm:px-6"
+>
+  <!-- Botón hamburguesa (móvil) -->
+  <p-button
+    (onClick)="layout.toggleMobile()"
+    icon="pi pi-bars"
+    [text]="true"
+    [rounded]="true"
+    styleClass="md:hidden"
+  />
+
+  <!-- Título contextual -->
+  <div class="flex items-center gap-2 text-sm font-medium text-surface-500 ">
+    <i class="pi pi-angle-right"></i>
+    <span>Admin</span>
+  </div>
+
+  <div class="flex-1"></div>
+
+  <!-- Notificaciones -->
+  <p-button icon="pi pi-bell" [text]="true" [rounded]="true" badge="3" badgeSeverity="danger" />
+
+  <p-divider layout="vertical" styleClass="!h-6" />
+
+  <!-- Menú de usuario -->
+  <p-menu #userMenu [model]="userMenuItems" popup="true" appendTo="body" styleClass="!w-56" />
+
+  <button
+    type="button"
+    class="flex items-center gap-3 rounded-full p-1 transition-colors hover:bg-surface-100 "
+    (click)="userMenu.toggle($event)"
+  >
+    <p-avatar label="RA" shape="circle" styleClass="!bg-primary-600 !text-white" size="normal" />
+    <div class="hidden text-left sm:block">
+      <p class="text-sm font-semibold leading-tight text-surface-900 ">Admin Demo</p>
+      <!-- <p class="text-xs leading-tight text-surface-500 ">admin@sisis.com</p> -->
+    </div>
+    <i class="pi pi-chevron-down text-xs text-surface-500 "></i>
+  </button>
+</header>

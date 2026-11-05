@@ -1,0 +1,6 @@
+@SISAS.Api_HostAddress = http://localhost:5110
+
+GET {{SISAS.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

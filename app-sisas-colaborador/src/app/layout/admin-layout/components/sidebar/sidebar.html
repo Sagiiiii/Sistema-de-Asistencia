@@ -1,0 +1,70 @@
+<aside
+  class="fixed inset-y-0 left-0 z-50 flex w-[264px] -translate-x-full flex-col border-r border-surface-200 bg-white shadow-lg transition-[transform] duration-200 md:translate-x-0"
+  [class.translate-x-0]="layout.mobileOpen()"
+>
+  <!-- Logo -->
+  <div class="flex h-16 shrink-0 items-center gap-3 border-b border-surface-200 px-5">
+    <div class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#0C4371] font-bold text-white">
+      S
+    </div>
+    <span class="truncate text-lg font-semibold tracking-tight text-surface-900">
+      {{ appName }}
+    </span>
+  </div>
+
+  <!-- Navegación -->
+  <nav class="flex-1 space-y-1 overflow-y-auto overflow-x-hidden p-3">
+    @for (item of items; track $index) {
+      @if (item.children && item.children.length > 0) {
+        <!-- Item con submenú -->
+        <div>
+          <button
+            type="button"
+            class="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors hover:bg-surface-100"
+            [class.bg-[#EF8F05].text-primary-700]="isChildActive(item)"
+            [class.text-surface-600]="!isChildActive(item)"
+            [class.hover:text-surface-900]="!isChildActive(item)"
+            (click)="toggleSubmenu($index)"
+            [attr.aria-expanded]="expandedIndex === $index"
+          >
+            <i class="{{ item.icon }} text-lg"></i>
+            <span class="flex-1 text-left">{{ item.label }}</span>
+            <i
+              class="pi pi-angle-down text-xs transition-transform duration-200"
+              [class.rotate-180]="expandedIndex === $index"
+            ></i>
+          </button>
+
+          @if (expandedIndex === $index) {
+            <div class="mt-1 space-y-1 border-l border-surface-200 pl-3">
+              @for (child of item.children; track $index) {
+                <a
+                  routerLink="{{ child.route }}"
+                  routerLinkActive="!bg-primary-50 !text-[#0C4371]"
+                  class="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+                  [class.pointer-events-none]="child.disabled"
+                  (click)="layout.closeMobile()"
+                >
+                  <i class="{{ child.icon }} text-base"></i>
+                  <span>{{ child.label }}</span>
+                </a>
+              }
+            </div>
+          }
+        </div>
+      } @else {
+        <!-- Item simple -->
+        <a
+          routerLink="{{ item.route }}"
+          routerLinkActive="!bg-[#EF8F05] !text-white"
+          class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-surface-600 transition-colors hover:bg-surface-100 hover:text-surface-900"
+          [class.pointer-events-none]="item.disabled"
+          (click)="layout.closeMobile()"
+        >
+          <i class="{{ item.icon }} text-lg"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    }
+  </nav>
+</aside>

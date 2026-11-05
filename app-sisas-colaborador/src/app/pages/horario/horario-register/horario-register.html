@@ -1,0 +1,137 @@
+<form (submit)="onSubmit(); $event.preventDefault()" class="flex flex-col gap-4">
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="nombre">Nombre</label>
+      <input
+        id="nombre"
+        type="text"
+        [formField]="form.nombre"
+      
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+      @if (form.nombre().touched() && form.nombre().errors().length) {
+        <small class="mt-1 block text-red-500">{{ form.nombre().errors()[0].message }}</small>
+      }
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="estado">Estado</label>
+      <select
+        id="estado"
+        [formField]="form.estado"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      >
+        <option value="1">Activo</option>
+        <option value="2">Inactivo</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="tipo">Tipo</label>
+      <input
+        id="tipo"
+        type="number"
+        [formField]="form.tipo"
+        
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="turno">Turno</label>
+      <input
+        id="turno"
+        type="text"
+        [formField]="form.turno"
+        
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="fechaInicio">Fecha inicio</label>
+      <input
+        id="fechaInicio"
+        type="date"
+        [formField]="form.fechaInicio"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="fechaFin">Fecha fin</label>
+      <input
+        id="fechaFin"
+        type="date"
+        [formField]="form.fechaFin"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="horaInicio">Hora inicio</label>
+      <input
+        id="horaInicio"
+        type="time"
+        [formField]="form.horaInicio"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="horaFin">Hora fin</label>
+      <input
+        id="horaFin"
+        type="time"
+        [formField]="form.horaFin"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="horaAperturaIngreso">Hora apertura ingreso</label>
+      <input
+        id="horaAperturaIngreso"
+        type="time"
+        [formField]="form.horaAperturaIngreso"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="horaCierreIngreso">Hora cierre ingreso</label>
+      <input
+        id="horaCierreIngreso"
+        type="time"
+        [formField]="form.horaCierreIngreso"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div>
+      <label class="mb-1 block text-sm font-medium" for="tolerancia">Tolerancia</label>
+      <input
+        id="tolerancia"
+        type="time"
+        [formField]="form.tolerancia"
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      />
+    </div>
+
+    <div class="col-span-2">
+      <label class="mb-1 block text-sm font-medium" for="descripcion">Descripción</label>
+      <textarea
+        id="descripcion"
+        [formField]="form.descripcion"
+        rows="3"
+        
+        class="w-full rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="flex justify-end gap-2">
+    <button pButton pRipple type="button" label="Cancelar" severity="secondary" (click)="close.emit()"></button>
+    <button pButton pRipple type="submit" label="Guardar" [disabled]="form().invalid() || saving()"></button>
+  </div>
+</form>

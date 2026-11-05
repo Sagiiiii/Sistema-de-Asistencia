@@ -1,0 +1,24 @@
+<div class="min-h-screen">
+  <app-sidebar />
+
+  <div class="flex min-h-screen flex-col md:pl-[264px]">
+    <app-topbar />
+
+    <main class="mx-auto w-full max-w-screen-2xl flex-1 p-4 sm:p-6">
+      <router-outlet />
+    </main>
+
+    <footer
+      class="border-t border-surface-200 px-6 py-4 text-center text-xs text-surface-500"
+    >
+      &copy; {{ year }} SISAS COLABORADORES &middot; TIC
+    </footer>
+  </div>
+
+  @if (layout.mobileOpen()) {
+    <div
+      class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+      (click)="layout.closeMobile()"
+    ></div>
+  }
+</div>

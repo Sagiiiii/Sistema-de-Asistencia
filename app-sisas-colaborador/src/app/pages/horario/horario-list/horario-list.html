@@ -1,0 +1,53 @@
+<app-page-header title="Horarios" subtitle="Listado de horarios del colegio"></app-page-header>
+
+<p-card>
+  <app-list-table
+    [columns]="columns"
+    [dataLoader]="loader"
+    [pageSize]="10"
+    [sortBy]="'nombre'"
+    [sortDir]="'asc'"
+    [selectable]="true"
+    [actions]="actions"
+    [filters]="filters()"
+    (action)="onAction($event)"
+    
+  >
+    <div listTableCaption class="flex flex-wrap items-center gap-3">
+      <select
+        [value]="filterField()"
+        (change)="onFieldChange($event)"
+        class="rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-primary"
+      >
+        <option value="nombre">Nombre</option>
+        <option value="descripcion">Descripción</option>
+      </select>
+      <span class="p-input-icon-left">
+        <input
+          type="text"
+          
+          [value]="filterText()"
+          (input)="onFilterInput($event)"
+          class="rounded-lg border border-surface-300 bg-surface-0 px-3 py-2 pl-9 text-sm outline-none focus:border-primary"
+        />
+      </span>
+      <button
+        pButton
+        pRipple
+        icon="pi pi-plus"
+        label="Registrar"
+        class="ml-auto"
+        (click)="onNew()"
+      ></button>
+    </div>
+  </app-list-table>
+</p-card>
+
+<p-dialog
+  [(visible)]="registerVisible"
+  header="Nuevo horario"
+  [modal]="true"
+  [style]="{ width: '50rem' }"
+>
+  <app-horario-register (close)="registerVisible.set(false)" (saved)="onSaved()" />
+</p-dialog>

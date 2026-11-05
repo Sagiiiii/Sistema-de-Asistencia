@@ -1,0 +1,107 @@
+<div class="overflow-x-auto">
+  <p-table
+    [value]="rows()"
+    [loading]="loading()"
+    [paginator]="true"
+    [lazy]="true"
+    [rows]="pageSizeState()"
+    [first]="first()"
+    [rowsPerPageOptions]="pageSizeOptions()"
+    [pageLinks]="pageLinks()"
+    [totalRecords]="totalRecords()"
+    [paginatorDropdownAppendTo]="'body'"
+    [sortField]="sortFieldState()"
+    [sortOrder]="sortOrderState()"
+    [sortMode]="'single'"
+    [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="'Mostrando {first} a {last} de {totalRecords} registros'"
+    [dataKey]="selectedCompareAttr()"
+    [selection]="selection()"
+    (selectionChange)="onSelectionChange($event)"
+    (onPage)="onPage($event)"
+    (onSort)="onSort($event)"
+  >
+    <ng-template pTemplate="caption">
+      <ng-content select="[listTableCaption]" />
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+     
+        @for (column of displayColumns(); track column.field) {
+          <th [pSortableColumn]="column.sortable ? fieldName(column) : undefined" [style.width]="column.width" [class]="cellClass(column)">
+            @if (column.sortable) {
+              <div class="flex items-center gap-1">
+                {{ column.header }}
+                <p-sortIcon [field]="fieldName(column)" />
+              </div>
+            } @else {
+              {{ column.header }}
+            }
+          </th>
+        }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-row>
+      <tr class="cursor-pointer" (click)="onRowClick(row)">
+       
+        @for (column of displayColumns(); track column.field) {
+          <td [class]="cellClass(column)">
+            @switch (column.type ?? 'text') {
+              @case ('text') {
+                <span>{{ cellValue(column, row) }}</span>
+              }
+              @case ('number') {
+                <span>{{ cellValue(column, row) | number: (column.digitsInfo ?? '1.2-2') }}</span>
+              }
+              @case ('currency') {
+                <span>{{ cellValue(column, row) | currency: (column.currency ?? 'PEN'):'symbol-narrow':'1.2-2':'es-PE' }}</span>
+              }
+              @case ('date') {
+                <span>{{ cellValue(column, row) | date: (column.dateFormat ?? 'dd/MM/yyyy') }}</span>
+              }
+              @case ('boolean') {
+                <p-tag
+                  [value]="cellValue(column, row) ? 'Sí' : 'No'"
+                  [severity]="cellValue(column, row) ? 'success' : 'secondary'"
+                  [rounded]="true"
+                />
+              }
+              @case ('badge') {
+                <p-tag [value]="badgeLabel(column, row)" [severity]="badgeSeverity(column, row)" [rounded]="true" />
+              }
+              @case ('template') {
+                <ng-container *ngTemplateOutlet="column.template ?? null; context: { $implicit: row }" />
+              }
+              @case ('action') {
+                <div class="flex items-center justify-end gap-1" (click)="$event.stopPropagation()">
+                  @for (action of actions(); track action.label) {
+                    @if (!action.visible || action.visible(row)) {
+                      <p-button
+                        [icon]="action.icon"
+                        [text]="true"
+                        [rounded]="true"
+                        [severity]="action.severity ?? 'primary'"
+                        [attr.title]="action.label"
+                        (onClick)="onAction($event, action, row)"
+                      />
+                    }
+                  }
+                </div>
+              }
+            }
+          </td>
+        }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="colspan()" class="py-8 text-center text-surface-400">
+          {{ emptyMessage() }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

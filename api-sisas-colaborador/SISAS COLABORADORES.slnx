@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="SISAS.Api/SISAS.Api.csproj" />
+    <Project Path="SISAS.Application/SISAS.Application.csproj" />
+    <Project Path="SISAS.Domain/SISAS.Domain.csproj" />
+    <Project Path="SISAS.Infraestructure/SISAS.Infraestructure.csproj" />
+    <Project Path="SISAS.Utilities/SISAS.Utilities.csproj" />
+  </Folder>
+</Solution>
